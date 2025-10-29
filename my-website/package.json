@@ -1,0 +1,20 @@
+{
+  "name": "my-website",
+  "version": "1.0.0",
+  "description": "A complete website project with frontend and backend functionality.",
+  "main": "backend/src/app.js",
+  "scripts": {
+    "start": "node backend/src/app.js",
+    "build": "echo 'Building frontend...'",
+    "test": "echo 'Running tests...'"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "author": "Your Name",
+  "license": "ISC"
+}
