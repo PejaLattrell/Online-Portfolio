@@ -33,16 +33,11 @@ my-website
 
 ### Frontend
 
-1. Navigate to the `frontend` directory.
-2. Open `index.html` in a web browser to view the website.
-3. Modify `main.css` to change styles and `main.js` for interactivity.
+
 
 ### Backend
 
-1. Navigate to the `backend` directory.
-2. Install dependencies using `npm install`.
-3. Create a `.env` file with your environment variables.
-4. Start the server by running `node src/app.js`.
+
 
 ## Features
 
@@ -53,6 +48,6 @@ my-website
 
 ## Author
 
-Your Name
+Peja Lattrell A. Escares
 
 Feel free to reach out for any questions or contributions!
