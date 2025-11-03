@@ -48,10 +48,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle contact form submission
     const contactForm = document.getElementById('contact-form');
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        // Add your form submission logic here
-        console.log('Form submitted');
+        
+        // Get form data
+        const formData = new FormData(contactForm);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            message: formData.get('message')
+        };
+
+        try {
+            // Show loading state
+            const submitButton = contactForm.querySelector('button');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+
+            // Send form data to backend
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
+            // Show success message
+            alert('Message sent successfully!');
+            contactForm.reset();
+        } catch (error) {
+            // Show error message
+            alert('Failed to send message. Please try again.');
+            console.error('Form submission error:', error);
+        } finally {
+            // Reset button state
+            const submitButton = contactForm.querySelector('button');
+            submitButton.disabled = false;
+            submitButton.textContent = 'Send Message';
+        }
     });
 
     // Smooth scroll for navigation links
