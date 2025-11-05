@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
-require('dotenv').config({ path: '../.env' }); // Update path to .env file
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') }); //connect env file
 
 const app = express();
 const port = process.env.PORT || 3000;
