@@ -2,7 +2,50 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  })
+  const [status, setStatus] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setStatus('')
+
+    try {
+      const response = await fetch('http://localhost:3000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setStatus('Message sent successfully! 🎉')
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        setStatus(`Error: ${data.message || 'Failed to send message'}`)
+      }
+    } catch (error) {
+      setStatus('Error: Could not connect to server')
+      console.error('Error:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <>
@@ -21,9 +64,8 @@ function App() {
 
       {/* Hero Section */}
       <section className="hero">
-        <img
-          src="" 
-          alt="Profile"
+        <img src="C:\Users\User\OneDrive\Desktop\Dev Projects\OnlinePortfolio\my-website\frontend\images\photo_me.jpeg" 
+          alt=""
           className="profile-img"
         />
         <h2>Hello, I'm Peja 👋</h2>
@@ -51,6 +93,60 @@ function App() {
         <h2>Contact Me</h2>
         <p>Email: <a href="mailto:lattrellp@gmail.com">lattrellp@gmail.com</a></p>
         <p>GitHub: <a href="https://github.com/pejalattrell" target="_blank">My Github Account</a></p>
+        
+        <div className="contact-form-container">
+          <h3>Send me a message</h3>
+          <form onSubmit={handleSubmit} className="contact-form">
+            <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                placeholder="Your name"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                placeholder="your.email@example.com"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                required
+                rows={5}
+                placeholder="Your message here..."
+              />
+            </div>
+            
+            <button type="submit" className="submit-btn" disabled={isSubmitting}>
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+            </button>
+            
+            {status && (
+              <div className={`status-message ${status.includes('Error') ? 'error' : 'success'}`}>
+                {status}
+              </div>
+            )}
+          </form>
+        </div>
       </section>
 
       {/* Footer */}
