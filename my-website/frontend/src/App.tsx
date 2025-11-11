@@ -49,8 +49,8 @@ function App() {
       {/* Contact Section */}
       <section id="contact" className="contact">
         <h2>Contact Me</h2>
-        <p>Email: <a href="mailto:pejalattrell@example.com">pejalattrell@example.com</a></p>
-        <p>GitHub: <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a></p>
+        <p>Email: <a href="mailto:lattrellp@gmail.com">lattrellp@gmail.com</a></p>
+        <p>GitHub: <a href="https://github.com/pejalattrell" target="_blank">My Github Account</a></p>
       </section>
 
       {/* Footer */}
