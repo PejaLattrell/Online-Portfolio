@@ -2,33 +2,45 @@ const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env') }); //connect env file
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
-// More detailed CORS configuration
+// Fixed CORS configuration
 app.use(cors({
-    origin: 'http://127.0.0.1:5500', // Update this to match your frontend URL
-    methods: ['POST'],
-    credentials: true
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST'],
+    credentials: true,
+    allowedHeaders: ['Content-Type']
 }));
 app.use(express.json());
 
-// Log environment variables (remove in production)
-console.log('Environment check:', {
-    emailUser: process.env.EMAIL_USER ? 'Set' : 'Missing',
-    emailPass: process.env.EMAIL_APP_PASSWORD ? 'Set' : 'Missing',
-    envPath: require.main.paths
-});
+// Validate environment variables
+if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
+    console.error('CRITICAL: Missing EMAIL_USER or EMAIL_APP_PASSWORD in .env file');
+    process.exit(1);
+}
+
+console.log('✓ Email User:', process.env.EMAIL_USER);
+console.log('✓ App Password configured');
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
     auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_APP_PASSWORD
-    },
-    debug: true // Enable debug logs
+        pass: process.env.EMAIL_APP_PASSWORD.trim()
+    }
+});
+
+transporter.verify((error, success) => {
+    if (error) {
+        console.error('✗ SMTP Error:', error);
+    } else {
+        console.log('✓ SMTP Connection Successful');
+    }
 });
 
 app.post('/api/contact', async (req, res) => {
@@ -38,7 +50,7 @@ app.post('/api/contact', async (req, res) => {
         const { name, email, message } = req.body;
         
         if (!name || !email || !message) {
-            throw new Error('Missing required fields');
+            return res.status(400).json({ message: 'All fields are required' });
         }
 
         const mailOptions = {
@@ -48,11 +60,11 @@ app.post('/api/contact', async (req, res) => {
             text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
         };
 
-        const info = await transporter.sendMail(mailOptions);
-        console.log('Email sent:', info);
-        res.status(200).json({ message: 'Message sent successfully', info });
+        await transporter.sendMail(mailOptions);
+        console.log('✓ Email sent successfully');
+        res.status(200).json({ message: 'Message sent successfully' });
     } catch (error) {
-        console.error('Detailed error:', error);
+        console.error('✗ Email error:', error.message);
         res.status(500).json({ 
             message: 'Failed to send message', 
             error: error.message 
@@ -60,11 +72,10 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
-// Test endpoint
 app.get('/api/test', (req, res) => {
-    res.json({ message: 'Server is running' });
+    res.json({ message: 'Server is running on port ' + port });
 });
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`✓ Server running on port ${port}`);
 });
