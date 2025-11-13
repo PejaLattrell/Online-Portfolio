@@ -64,8 +64,8 @@ function App() {
 
       {/* Hero Section */}
       <section className="hero">
-        <img src="C:\Users\User\OneDrive\Desktop\Dev Projects\OnlinePortfolio\my-website\frontend\images\photo_me.jpeg" 
-          alt=""
+        <img src="\images\photo_me.jpeg" 
+          alt="My Profile"
           className="profile-img"
         />
         <h2>Hello, I'm Peja 👋</h2>
