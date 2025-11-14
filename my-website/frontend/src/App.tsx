@@ -52,7 +52,7 @@ function App() {
       <div className="App">
       {/* Header */}
       <header className="header">
-        <h1 className="logo">Peja Lattrell A. Escares</h1>
+        <h1 className="logo">Welcome!🤫</h1>
         <nav>
           <ul>
             <li><a href="#about">About</a></li>
@@ -68,10 +68,13 @@ function App() {
           alt="My Profile"
           className="profile-img"
         />
-        <h2>Hello, I'm Peja 👋</h2>
-        <p>A passionate Computer Science student aspiring to become a Data Engineer / DevOps Engineer.</p>
-        <a href="#projects" className="btn">View My Work</a>
-      </section>
+        <div className="hero-text-content">
+          <h2 className="greetings">Hello, I'm Peja 👋</h2>
+          <p>A passionate Computer Science student aspiring to become a Data Engineer / DevOps Engineer.</p>
+          <a href="#projects" className="btn">View My Work</a>
+        </div>
+
+        </section>
 
       {/* Projects Section */}
       <section id="projects" className="projects">

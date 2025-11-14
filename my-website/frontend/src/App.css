@@ -18,30 +18,27 @@ body {
 }
 
 #root {
-  max-width: 100%;
-  margin: 0 auto;
-  padding:0;
-  text-align: center;
+    padding:0;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
-  background-color: #20232a;
-  color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #20232a;
+    color: white;
 }
 
 .header ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
+    list-style: none;
+    display: flex;
+    gap: 20px;
 }
 
 .header a {
-  color: white;
-  text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
 /* Navigation */
@@ -52,7 +49,7 @@ nav {
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    border-radius: 15%
+    border-radius: 10px
 }
 
 nav h1 {
@@ -80,18 +77,26 @@ nav a:hover {
 
 /* Hero Section */
 .hero {
+    position: relative;
     min-height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center;      
+    justify-content: flex-start;  
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 2rem;
-    text-align: center;
+    padding: 2rem 4rem;       
     color: white;
+    gap: 2rem;               
 }
 
 .hero-content {
     max-width: 800px;
+}
+
+.hero-text-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns h2, p, and button to the left */
+    text-align: left;        /* Ensures text inside is left-aligned */
 }
 
 .hero h2 {
@@ -106,18 +111,28 @@ nav a:hover {
     opacity: 0.95;
 }
 
+.hero-text-content p {
+    margin-bottom: 1.5rem; /* Adds space between <p> and <button> */
+}
+
 .profile-img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%; /* Makes it a circle */
-  object-fit: cover;  /* Prevents stretching */
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; 
+    object-fit: cover;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.greetings{
+    position: flex;
+
 }
 
 .btn{
-    background-color: white;
-    border-radius: 15%;
+    background-color: rgba(106, 46, 121, 0);
+    color: white;
+    border-radius: 5px;
 }
 
 .cta-button {

@@ -5,21 +5,41 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 
 const app = express();
-const port = process.env.PORT || 5000;
 
-// Fixed CORS configuration
+
+
+// 1. Dynamic CORS Configuration
+// This allows requests from your production Vercel URL and all preview branches
+const allowedOrigins = [
+    'http://localhost:5173' // Keep for local development
+];
+
+if (process.env.VERCEL_URL) {
+    allowedOrigins.push(`https://${process.env.VERCEL_URL}`);
+}
+
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST'],
     credentials: true,
     allowedHeaders: ['Content-Type']
 }));
+
+
+
 app.use(express.json());
 
 // Validate environment variables
 if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
     console.error('CRITICAL: Missing EMAIL_USER or EMAIL_APP_PASSWORD in .env file');
-    process.exit(1);
+    // In a serverless environment, you might not want to exit the process
+    // but this check is still good.
 }
 
 console.log('✓ Email User:', process.env.EMAIL_USER);
@@ -73,9 +93,9 @@ app.post('/api/contact', async (req, res) => {
 });
 
 app.get('/api/test', (req, res) => {
-    res.json({ message: 'Server is running on port ' + port });
+    res.json({ message: 'Server is running' });
 });
 
-app.listen(port, () => {
-    console.log(`✓ Server running on port ${port}`);
-});
+
+module.exports = app;
+
