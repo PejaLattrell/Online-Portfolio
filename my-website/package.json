@@ -1,23 +1,15 @@
 {
-  "name": "my-website",
+  "name": "online-portfolio",
   "version": "1.0.0",
-  "description": "A complete website project with frontend and backend functionality.",
-  "main": "backend/src/app.js",
+  "description": "Personal portfolio website",
+  "private": true,
   "scripts": {
-    "start": "node backend/src/app.js",
-    "build": "echo 'Building frontend...'",
-    "test": "echo 'Running tests...'"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.21.2",
-    "nodemailer": "^7.0.10"
+    "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm start\"",
+    "build": "cd frontend && npm run build"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "concurrently": "^8.2.0"
   },
-  "author": "Your Name",
-  "license": "ISC",
-  "keywords": []
+  "author": "Peja Lattrell",
+  "license": "ISC"
 }

@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import './App.css'
 
+const API_URL = import.meta.env.MODE === 'production' 
+  ? 'https://online-portfolio-six.vercel.app/api/contact'
+  : 'http://localhost:5000/api/contact'
+
 function App() {
   const [formData, setFormData] = useState({
     name: '',
@@ -23,7 +27,7 @@ function App() {
     setStatus('')
 
     try {
-      const response = await fetch('http://localhost:5000/api/contact', {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,7 +68,7 @@ function App() {
 
       {/* Hero Section */}
       <section className="hero">
-        <img src="\images\photo_me.jpeg" 
+        <img src="/images/photo_me.jpeg" 
           alt="My Profile"
           className="profile-img"
         />
@@ -162,3 +166,4 @@ function App() {
 }
 
 export default App
+

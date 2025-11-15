@@ -1,36 +1,8 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "options": {
-        "buildCommand": "cd frontend && npm install && npm run build",
-        "outputDirectory": "frontend/dist"
-      }
-    },
-    {
-      "src": "backend/src/app.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "http://localhost:5000/api/:path*"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/frontend/index.html"
-    }
-  ],
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "backend/src/app.js": {
-      "memory": 1024,
-      "maxDuration": 60
-    }
   }
 }
