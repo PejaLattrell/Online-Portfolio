@@ -5,7 +5,7 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "options": {
-        "buildCommand": "npm run build",
+        "buildCommand": "cd frontend && npm install && npm run build",
         "outputDirectory": "frontend/dist"
       }
     },
@@ -16,12 +16,21 @@
   ],
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/backend/src/app.js"
+      "source": "/api/:path*",
+      "destination": "http://localhost:5000/api/:path*"
     },
     {
       "source": "/(.*)",
       "destination": "/frontend/index.html"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "backend/src/app.js": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  }
 }
