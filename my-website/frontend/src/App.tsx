@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 
 const API_URL = import.meta.env.MODE === 'production' 
-  ? 'https://your-railway-backend.up.railway.app/api/contact'
+  ? 'https://your-api-endpoint.com/api/contact'  // Or remove this line entirely
   : 'http://localhost:5000/api/contact'
 
 function App() {
@@ -23,32 +23,8 @@ function App() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
-    setStatus('')
-
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-
-      const data = await response.json()
-
-      if (response.ok) {
-        setStatus('Message sent successfully! 🎉')
-        setFormData({ name: '', email: '', message: '' })
-      } else {
-        setStatus(`Error: ${data.message || 'Failed to send message'}`)
-      }
-    } catch (error) {
-      setStatus('Error: Could not connect to server')
-      console.error('Error:', error)
-    } finally {
-      setIsSubmitting(false)
-    }
+    alert('Contact form is currently disabled')
+    // Remove the fetch call
   }
 
   return (
