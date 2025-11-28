@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 
 const API_URL = import.meta.env.MODE === 'production' 
-  ? 'https://online-portfolio-six.vercel.app/api/contact'
+  ? 'https://your-railway-backend.up.railway.app/api/contact'
   : 'http://localhost:5000/api/contact'
 
 function App() {
